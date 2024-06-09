@@ -34,7 +34,7 @@ jobs:
           push: true
           tags: nefelibata0531/234-deploylab-frontend:latest
       -
-        name: copy file via ssh password
+        name: copy docker-compose.yml via ssh password
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{secrets.HOST_SERVER}}
@@ -43,6 +43,16 @@ jobs:
           port: 22
           source: "docker-compose.yml"
           target: "/home/ecs-user/frontend"
+      -
+        name: copy docker-compose-prod.yml via ssh password
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{secrets.HOST_SERVER}}
+          username: ${{ secrets.HOST_USER_NAME }}
+          key: ${{ secrets.HOST_SSH_PRIVATE_KEY }}
+          port: 22
+          source: "docker-compose-prod.yml"
+          target: "/home/ecs-user/frontend"    
       -
         name:   docker compose
         uses: appleboy/ssh-action@v0.1.10
